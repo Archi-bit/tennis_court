@@ -39,8 +39,22 @@ class ClubInfo(models.Model):
         return super().changelist_view(request, extra_context)
 
     def __str__(self):
-        return "Info about club"
+        return "Информация о клубе"
 
     class Meta:
         verbose_name = 'Информация о клубе'
         verbose_name_plural = 'Информация о клубе'
+
+
+class ClubRule(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    order = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.order}. {self.title}'
+
+    class Meta:
+        verbose_name = 'Правило клуба'
+        verbose_name_plural = 'Правила клуба'

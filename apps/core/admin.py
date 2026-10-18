@@ -10,3 +10,9 @@ class ClubInfoAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+@admin.register(ClubRule)
+class ClubRuleAdmin(admin.ModelAdmin):
+    list_display = ('order', 'title', 'is_active')
+    list_editable = ('order', 'is_active')
