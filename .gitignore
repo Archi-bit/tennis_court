@@ -1,0 +1,31 @@
+# Виртуальное окружение
+venv/
+env/
+.venv/
+
+# Настройки Python и байт-код
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Локальная база данных (SQLite)
+db.sqlite3
+db.sqlite3-journal
+
+# Локальные файлы настроек и секреты (ключи, пароли)
+.env
+local_settings.py
+
+# Медиафайлы и статика, загружаемые локально (лучше хранить на сервере / в S3, а не в Git)
+media/
+staticfiles/
+
+# Системные файлы ОС
+.DS_Store
+Thumbs.db
+
+# Файлы редакторов кода
+.vscode/
+.idea/
