@@ -7,7 +7,7 @@ class ActiveCourtManager(models.Manager):
         return super().get_queryset().filter(is_active=True)
 
 
-SURFACE_CHOISES = [
+SURFACE_CHOICES = [
     ('clay', 'грунт'),
     ('artificial_grass', 'искусственная трава'),
     ('hard', 'хард')
@@ -17,7 +17,7 @@ class CourtType(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, max_length=155)
     description = models.TextField(null=True, blank=True)
-    surface = models.CharField(choices=SURFACE_CHOISES, max_length=20)
+    surface = models.CharField(choices=SURFACE_CHOICES, max_length=20)
     is_indoor = models.BooleanField()
     image = models.ImageField(upload_to='court_type_image/', null=True, blank=True)
 
