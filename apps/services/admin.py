@@ -7,7 +7,7 @@ from .models import *
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'is_active', 'order')
     list_filter = ('is_active', 'category', 'order')
-    list_editable = ('price', 'is_active')
+    list_editable = ('order', 'is_active')
 
 
 @admin.register(PriceCategory)

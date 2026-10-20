@@ -1,5 +1,6 @@
 from django.db import models
-from courts.models import Court
+from apps.courts.models import Court
+from django.utils.text import slugify
 
 
 
@@ -15,7 +16,7 @@ class News(models.Model):
     content = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='news_images/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
 
     objects = models.Manager()
@@ -25,6 +26,11 @@ class News(models.Model):
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
         ordering = ['-created_at']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -42,7 +48,7 @@ class GalleryImage(models.Model):
     title = models.CharField(max_length=150)
     image = models.ImageField(upload_to='gallery_images/', null=True, blank=True)
     category = models.CharField(choices=CATEGORY_CHOICE, max_length=15, default='club')
-    court = models.ForeignKey(Court, on_delete=models.SET_NULL, blank=True, null=True, related_name='courts')
+    courts = models.ForeignKey(Court, on_delete=models.SET_NULL, blank=True, null=True, related_name='courts')
     order = models.PositiveSmallIntegerField(default=0)
 
     class Meta:

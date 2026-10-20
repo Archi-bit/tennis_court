@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from decimal import Decimal
+from django.utils.text import slugify
 
 
 
@@ -36,6 +37,11 @@ class PriceCategory(models.Model):
     class Meta:
         verbose_name = 'Цена за сервис'
         verbose_name_plural = 'Цены за сервисы'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

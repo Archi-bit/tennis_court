@@ -9,8 +9,8 @@ class CourtTypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
     @admin.display(description='Количество кортов')
-    def get_courts_type_count(self, obj):
-        return obj.courts_type_count
+    def get_court_type_count(self, obj):
+        return obj.court_type_count
 
 
 @admin.register(Court)

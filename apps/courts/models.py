@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 
@@ -24,6 +25,11 @@ class CourtType(models.Model):
     class Meta:
         verbose_name = 'Тип корта'
         verbose_name_plural = 'Типы кортов'
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     @property
     def court_type_count(self):

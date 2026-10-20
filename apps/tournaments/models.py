@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
 
 
 
@@ -31,6 +32,11 @@ class Tournament(models.Model):
         verbose_name = 'Турнир'
         verbose_name_plural = 'Турниры'
         ordering = ['-start_date']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
     def clean(self):
         super().clean()
