@@ -1,3 +1,12 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+
+
+@admin.register(Tournament)
+class TournamentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'start_date', 'end_date', 'status')
+    list_filter = ('status', 'is_published', 'start_date')
+    search_fields = ('title', 'description')
+    prepopulated_fields = {'slug': ('title', )}
+    list_editable = ('status', 'is_published')

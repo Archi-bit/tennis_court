@@ -5,12 +5,12 @@ from .models import *
 
 @admin.register(CourtType)
 class CourtTypeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'surface', 'is_indoor', 'get_courts_count')
+    list_display = ('name', 'surface', 'is_indoor', 'get_courts_type_count')
     prepopulated_fields = {'slug': ('name',)}
 
     @admin.display(description='Количество кортов')
-    def get_courts_count(self, obj):
-        return obj.courts_count
+    def get_courts_type_count(self, obj):
+        return obj.courts_type_count
 
 
 @admin.register(Court)

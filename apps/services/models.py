@@ -47,8 +47,8 @@ class ActivePriceItemManager(models.Manager):
 
 
 class PriceItem(models.Model):
-    category = models.ForeignKey(PriceCategory, on_delete=models.CASCADE)
-    service = models.ForeignKey(Service, on_delete=models.SET_NULL, blank=True, null=True)
+    category = models.ForeignKey(PriceCategory, on_delete=models.CASCADE, related_name='category')
+    service = models.ForeignKey(Service, on_delete=models.SET_NULL, blank=True, null=True, related_name='service')
     title = models.CharField(max_length=150)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, validators=[MinValueValidator(Decimal(0.00))])

@@ -26,8 +26,8 @@ class CourtType(models.Model):
         verbose_name_plural = 'Типы кортов'
 
     @property
-    def courts_count(self):
-        return self.courts.count
+    def court_type_count(self):
+        return self.court_type.count
 
     def __str__(self):
         return self.name
@@ -35,7 +35,7 @@ class CourtType(models.Model):
 
 class Court(models.Model):
     court_number = models.PositiveSmallIntegerField(unique=True)
-    court_type = models.ForeignKey(CourtType, on_delete=models.PROTECT, related_name='courts')
+    court_type = models.ForeignKey(CourtType, on_delete=models.PROTECT, related_name='court_type')
     is_active = models.BooleanField(default=True)
     description = models.TextField(blank=True, null=True)
 

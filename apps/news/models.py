@@ -42,7 +42,7 @@ class GalleryImage(models.Model):
     title = models.CharField(max_length=150)
     image = models.ImageField(upload_to='gallery_images/', null=True, blank=True)
     category = models.CharField(choices=CATEGORY_CHOICE, max_length=15, default='club')
-    court = models.ForeignKey(Court, on_delete=models.SET_NULL, blank=True, null=True)
+    court = models.ForeignKey(Court, on_delete=models.SET_NULL, blank=True, null=True, related_name='courts')
     order = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
