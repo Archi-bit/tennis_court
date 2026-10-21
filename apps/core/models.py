@@ -32,12 +32,6 @@ class ClubInfo(models.Model):
         })
         return obj
 
-    def changelist_view(self, request, extra_context=None):
-        if self.model.objects.exists():
-            obj = self.model.objects.first()
-            return redirect('admin.core_clubinfo_change')
-        return super().changelist_view(request, extra_context)
-
     def __str__(self):
         return "Информация о клубе"
 
@@ -58,3 +52,4 @@ class ClubRule(models.Model):
     class Meta:
         verbose_name = 'Правило клуба'
         verbose_name_plural = 'Правила клуба'
+        ordering = ['order', 'id']

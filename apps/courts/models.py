@@ -11,12 +11,12 @@ class ActiveCourtManager(models.Manager):
 SURFACE_CHOICES = [
     ('clay', 'грунт'),
     ('artificial_grass', 'искусственная трава'),
-    ('hard', 'хард')
+    ('hard', 'Хард')
 ]
 
 class CourtType(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, max_length=155)
+    slug = models.SlugField(unique=True, max_length=155, blank=True, allow_unicode=True)
     description = models.TextField(null=True, blank=True)
     surface = models.CharField(choices=SURFACE_CHOICES, max_length=20)
     is_indoor = models.BooleanField()
@@ -28,12 +28,8 @@ class CourtType(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name, allow_unicode=True)
         super().save(*args, **kwargs)
-
-    @property
-    def court_type_count(self):
-        return self.court_type.count
 
     def __str__(self):
         return self.name

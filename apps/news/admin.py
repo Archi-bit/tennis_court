@@ -14,7 +14,7 @@ class NewsAdmin(admin.ModelAdmin):
 
 @admin.register(GalleryImage)
 class GalleryImageAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'court', 'order', 'image')
-    list_filter = ('category', 'court')
+    list_display = ('title', 'category', 'courts', 'order', 'image')
+    list_filter = ('category', 'courts')
     search_fields = ('title', )
     list_editable = ('order', 'category')

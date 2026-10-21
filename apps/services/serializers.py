@@ -18,12 +18,12 @@ class ServiceDetailSerializer(serializers.ModelSerializer):
 class PriceItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = PriceItem
-        fields = ('id', 'category', 'service', 'title', 'description', 'price', 'duration_minutes', 'discount_present', 'is_active')
+        fields = ('id', 'category', 'service', 'title', 'description', 'price', 'duration_minutes', 'discount_percent', 'is_active')
 
 
 class PriceCategorySerializer(serializers.ModelSerializer):
-    category = PriceItemSerializer(many=True, read_only=True)
+    price = PriceItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = PriceCategory
-        fields = ('id', 'title', 'slug', 'order', 'category')
+        fields = ('id', 'title', 'slug', 'order', 'price')

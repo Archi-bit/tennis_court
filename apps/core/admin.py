@@ -14,5 +14,6 @@ class ClubInfoAdmin(admin.ModelAdmin):
 
 @admin.register(ClubRule)
 class ClubRuleAdmin(admin.ModelAdmin):
-    list_display = ('order', 'title', 'is_active')
+    list_display = ('title', 'order', 'is_active')
+    list_filter = ('order', )
     list_editable = ('order', 'is_active')

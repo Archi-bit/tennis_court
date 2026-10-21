@@ -1,3 +1,2 @@
-models & admin приложений coaches, core, courts, news, services, tournaments завершены
-осталось сделать models & admin для приложений bookings
-нужно сделать CRUD, serializers, filters, pagination, permissions, autorization, autentification и пока на этом все
+сериализаторы, админка и модельки для всех приложений созданы (кроме bookings)
+мелкие ошибки архитертуры и баги в коде исправлены (не до конца), нужно исправить до конца

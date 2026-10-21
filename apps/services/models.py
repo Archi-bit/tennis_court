@@ -53,13 +53,13 @@ class ActivePriceItemManager(models.Manager):
 
 
 class PriceItem(models.Model):
-    category = models.ForeignKey(PriceCategory, on_delete=models.CASCADE, related_name='category')
+    category = models.ForeignKey(PriceCategory, on_delete=models.CASCADE, related_name='price')
     service = models.ForeignKey(Service, on_delete=models.SET_NULL, blank=True, null=True, related_name='service')
     title = models.CharField(max_length=150)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, validators=[MinValueValidator(Decimal(0.00))])
     duration_minutes = models.PositiveIntegerField(blank=True, null=True)
-    discount_present = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    discount_percent = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     is_active = models.BooleanField(default=True)
 
     objects = models.Manager()
