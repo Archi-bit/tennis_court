@@ -44,13 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'phonenumber_field',
 
-    'apps.bookings',
-    'apps.coaches',
-    'apps.core',
-    'apps.courts',
-    'apps.news',
-    'apps.services',
-    'apps.tournaments',
+    'tennis',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +128,17 @@ STATIC_URL = 'static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'tennis.permissions.IsStaffOrReadOnly',
+    ],
+}
 
 
 # Email
