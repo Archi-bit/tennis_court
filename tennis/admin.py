@@ -20,14 +20,17 @@ class ClubInfoAdmin(admin.ModelAdmin):
 @admin.register(ClubRule)
 class ClubRuleAdmin(admin.ModelAdmin):
     list_display = ('title', 'order', 'is_active')
-    list_filter = ('order', )
+    list_filter = ('is_active', )
     list_editable = ('order', 'is_active')
+    search_fields = ('title', 'content')
 
 
 @admin.register(CourtType)
 class CourtTypeAdmin(admin.ModelAdmin):
     list_display = ('name', 'surface', 'is_indoor', 'get_court_type_count')
+    list_filter = ('surface', 'is_indoor')
     prepopulated_fields = {'slug': ('name',)}
+    search_fields = ('name', 'description')
 
     @admin.display(description='Количество кортов')
     def get_court_type_count(self, obj):
@@ -54,12 +57,15 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'is_active', 'order')
     list_filter = ('is_active', 'category', 'order')
     list_editable = ('order', 'is_active')
+    search_fields = ('title', 'description')
+    prepopulated_fields = {'slug': ('title',)}
 
 
 @admin.register(PriceCategory)
 class PriceCategoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'order')
     list_filter = ('order', )
+    search_fields = ('title', )
 
 
 @admin.register(PriceItem)

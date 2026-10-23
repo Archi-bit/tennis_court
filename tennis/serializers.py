@@ -99,7 +99,7 @@ class PriceItemSerializer(serializers.ModelSerializer):
 
 
 class PriceCategorySerializer(serializers.ModelSerializer):
-    price = PriceItemSerializer(many=True, read_only=True)
+    price = serializers.SerializerMethodField()
 
     class Meta:
         model = PriceCategory
@@ -126,3 +126,14 @@ class TournamentDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tournament
         fields = ('id', 'title', 'slug', 'description', 'image', 'start_date', 'end_date', 'status', 'is_published')
+
+    def validate(self, attrs):
+        start_date = attrs.get('start_date', getattr(self.instance, 'start_date', None))
+        end_date = attrs.get('end_date', getattr(self.instance, 'end_date', None))
+
+        if start_date and end_date and end_date < start_date:
+            raise serializers.ValidationError({
+                'end_date': 'Дата окончания не может быть раньше даты начала'
+            })
+
+        return attrs

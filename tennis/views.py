@@ -138,7 +138,7 @@ class NewsViewSet(viewsets.ModelViewSet):
 class GalleryImageViewSet(viewsets.ModelViewSet):
     queryset = GalleryImage.objects.all()
     serializer_class = GalleryImageSerializer
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ['category']
     ordering_fields = ['order']
     ordering = ['order', 'id']
