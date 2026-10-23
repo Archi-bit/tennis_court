@@ -53,7 +53,7 @@ class CourtTypeSerializer(serializers.ModelSerializer):
 class CourtListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Court
-        fields = ('id', 'court_number', 'is_active')
+        fields = ('id', 'court_number', 'court_type_id', 'is_active')
 
 
 class CourtDetailSerializer(serializers.ModelSerializer):

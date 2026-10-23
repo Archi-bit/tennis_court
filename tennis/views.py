@@ -1,19 +1,16 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.generics import RetrieveUpdateAPIView
-
-from .models import (
-    ClubInfo, ClubRule, CourtType, Court, Coach, Service, PriceCategory,
-    PriceItem, News, GalleryImage, Tournament,
-)
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+from .models import (ClubInfo, ClubRule, CourtType, Court, Coach, Service, PriceCategory, PriceItem, News, GalleryImage, Tournament)
 from .serializers import (
-    ClubInfoSerializer, ClubRuleSerializer, CourtTypeSerializer,
-    CourtListSerializer, CourtDetailSerializer, CoachListSerializer,
-    CoachDetailSerializer, ServiceListSerializer, ServiceDetailSerializer,
-    PriceCategorySerializer, PriceItemSerializer, NewsListSerializer,
-    NewsDetailSerializer, GalleryImageSerializer, TournamentListSerializer,
-    TournamentDetailSerializer,
+    ClubInfoSerializer, ClubRuleSerializer, CourtTypeSerializer, CourtListSerializer, CourtDetailSerializer, CoachListSerializer,
+    CoachDetailSerializer, ServiceListSerializer, ServiceDetailSerializer, PriceCategorySerializer, PriceItemSerializer, NewsListSerializer,
+    NewsDetailSerializer, GalleryImageSerializer, TournamentListSerializer, TournamentDetailSerializer,
 )
+from .pagination import SixPerPagePagination
+
 
 
 class ClubInfoView(RetrieveUpdateAPIView):
@@ -44,6 +41,8 @@ class CourtTypeViewSet(viewsets.ModelViewSet):
 class CourtViewSet(viewsets.ModelViewSet):
     queryset = Court.objects.all()
     serializer_class = CourtDetailSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['court_type']
 
     def get_queryset(self):
         if self.request.user.is_staff:
@@ -61,6 +60,8 @@ class CourtViewSet(viewsets.ModelViewSet):
 class CoachViewSet(viewsets.ModelViewSet):
     queryset = Coach.objects.all()
     serializer_class = CoachDetailSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['full_name']
 
     def get_queryset(self):
         if self.request.user.is_staff:
@@ -78,6 +79,8 @@ class CoachViewSet(viewsets.ModelViewSet):
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceDetailSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category']
 
     def get_queryset(self):
         if self.request.user.is_staff:
@@ -100,6 +103,8 @@ class PriceCategoryViewSet(viewsets.ModelViewSet):
 class PriceItemViewSet(viewsets.ModelViewSet):
     queryset = PriceItem.objects.all()
     serializer_class = PriceItemSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category']
 
     def get_queryset(self):
         if self.request.user.is_staff:
@@ -111,6 +116,11 @@ class PriceItemViewSet(viewsets.ModelViewSet):
 class NewsViewSet(viewsets.ModelViewSet):
     queryset = News.objects.all()
     serializer_class = NewsDetailSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['title']
+    ordering_fields = ['created_at']
+    ordering = ['-created_at', '-id']
+    pagination_class = SixPerPagePagination
 
     def get_queryset(self):
         if self.request.user.is_staff:
@@ -128,11 +138,18 @@ class NewsViewSet(viewsets.ModelViewSet):
 class GalleryImageViewSet(viewsets.ModelViewSet):
     queryset = GalleryImage.objects.all()
     serializer_class = GalleryImageSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category']
+    ordering_fields = ['order']
+    ordering = ['order', 'id']
 
 
 class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()
     serializer_class = TournamentDetailSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['status']
+    pagination_class = SixPerPagePagination
 
     def get_queryset(self):
         if self.request.user.is_staff:
